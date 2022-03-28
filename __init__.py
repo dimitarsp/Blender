@@ -1,10 +1,10 @@
 bl_info = {
     "name": "Sync Render with Viewport",
-    "author": "Nayunis",
-    "version": (1, 0, 0),
+    "author": "Nayunis, Dimitar",
+    "version": (1, 1, 0),
     "blender": (2, 83, 0),
     "location": "View3D",
-    "description": "When clicking on the button it will snychronise all render ports (render/don't render) with the current state of the view ports (visible/not visible). This means anything visible will be rendered and anything invisible will not be rendered.",
+    "description": "When clicking on the button it will snychronise render visibility state with viewport visibility state ",
     "category": "Interface",
 }
 
@@ -18,7 +18,10 @@ class SyncRenderWithView(bpy.types.Operator):
 	bl_label = ""
 	
 	def execute(self,context):
-		for ob in bpy.context.scene.objects: ob.hide_render = ob.hide_get()
+		if ob.hide_viewport==True:
+			ob.hide_render = True
+			else:
+				ob.hide_render = False
 		return {"FINISHED"}
 
 classes.append(SyncRenderWithView)
